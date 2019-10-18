@@ -5,33 +5,46 @@
 
         <script>
 
-            function showTables(){
+            function getTable(){
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function() {
                 //xhttp.responseType = "application/json";
                 if (this.readyState == 4 && this.status == 200) {
                     // Typical action to be performed when the document is ready:
-                    var response = JSON.parse(xhttp.responseText);
-                    fact = response.fact + "<br>";
-                    facts.display += "Feit " + facts.counter + ": " + fact;
-                    document.getElementById("factDisplay").innerHTML = facts.display;
-                    facts.counter++;
-                    var factsJSON = JSON.stringify(facts);
-                    console.log(localStorage);
-                    localStorage.setItem('catFacts', factsJSON);
+                    var tafel = JSON.parse(xhttp.responseText);
+                    console.log(tafel);
+                    document.getElementById("tafel").innerHTML = "Tafelnr: " + tafel.tafelnummer + " is bezet: "+ tafel.bezet;
+                    localStorage.setItem('tafels', tafel);
                     }
                 }
-            xhttp.open("GET","https://nos.nl", true);
+            xhttp.open("GET","http://localhost:8082/tafel", true);
             xhttp.send();
+            }
+
+            function getOber() {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    //xhttp.responseType = "application/json";
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Typical action to be performed when the document is ready:
+                        var ober = JSON.parse(xhttp.responseText);
+                        console.log(ober[0]);
+                        document.getElementById("ober").innerHTML = "Ober: " + ober[0].naam + " werkt aan tafel " + ober[0].tafel;
+                        localStorage.setItem('obers', ober);
+                    }
+                }
+                xhttp.open("GET", "http://localhost:8082/ober", true);
+                xhttp.send();
             }
 
         </script>
     </head>
 
     <body>
-        <button onclick="showTables()">OK
-        </button>
-        <div id="results"></div>
+        <button onclick="getTable()">Tafel</button>
+        <button onclick="getOber()">Ober</button>
+        <div id="tafel"></div>
+        <div id="ober"></div>
     </body>
 
 </html>
