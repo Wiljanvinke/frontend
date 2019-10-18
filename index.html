@@ -37,12 +37,31 @@
                 xhttp.send();
             }
 
+            function postOber() {
+                var ober = {};
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Typical action to be performed when the document is ready:
+                        console.log(this.response);
+                    }
+                }
+                ober.naam="Gart";
+                ober.tafel = "1";
+                console.log(ober);
+                xhttp.open("POST", "http://localhost:8082/ober", true);
+                xhttp.setRequestHeader("Content-Type", "application/json");
+                xhttp.send(JSON.stringify(ober));
+            
+            }
+
         </script>
     </head>
 
     <body>
         <button onclick="getTable()">Tafel</button>
         <button onclick="getOber()">Ober</button>
+        <button onclick="postOber()">Post Ober</button>
         <div id="tafel"></div>
         <div id="ober"></div>
     </body>
