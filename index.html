@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <style>
+        </style>
+
+        <script>
+
+            function showTables(){
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                //xhttp.responseType = "application/json";
+                if (this.readyState == 4 && this.status == 200) {
+                    // Typical action to be performed when the document is ready:
+                    var response = JSON.parse(xhttp.responseText);
+                    fact = response.fact + "<br>";
+                    facts.display += "Feit " + facts.counter + ": " + fact;
+                    document.getElementById("factDisplay").innerHTML = facts.display;
+                    facts.counter++;
+                    var factsJSON = JSON.stringify(facts);
+                    console.log(localStorage);
+                    localStorage.setItem('catFacts', factsJSON);
+                    }
+                }
+            xhttp.open("GET","https://nos.nl", true);
+            xhttp.send();
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <button onclick="showTables()">OK
+        </button>
+        <div id="results"></div>
+    </body>
+
+</html>
